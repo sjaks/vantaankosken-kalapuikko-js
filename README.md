@@ -3,10 +3,10 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 
 ## Roadmap
 ### Assets
-- [ ] School picture
-- [ ] Police car picture
-- [ ] Fish finger picture
-- [ ] Cooker lady picture
+- [x] School picture
+- [x] Police car picture
+- [x] Fish finger picture
+- [x] Cooker lady picture
 - [ ] Plate vector graphics
 - [ ] Vector buttons
 
@@ -17,7 +17,22 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 - [ ] Defeat sound
 
 ### Code implementation
-- [ ] Create prototypes
+- [x] Create skeleton files
 - [ ] Design game logic
 - [ ] Create frontend
 - [ ] Test everything
+
+## Licenses
+
+- images/png/school.png
+  - [Leo-setä](https://www.flickr.com/photos/uncle-leo/)
+  - [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/)
+- images/png/policecar.png
+  - [Santeri Viinamäki](https://fi.wikipedia.org/wiki/Tiedosto:Poliisiauto_liikenteess%C3%A4.JPG)
+  - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- images/png/fishfinger.png
+  - [Superbass](https://commons.wikimedia.org/wiki/File:Fishfinger1.jpg)
+  - [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/deed.en)
+- images/svg/cookerlady.png
+  - [Sami Jakonen](https://jaks.fi/)
+  - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
