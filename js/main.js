@@ -5,12 +5,16 @@ var cw = c.width;
 var waitForImage = 0;
 
 
+var buttonAreas = [];
+
+
 // Initialize the game
 function init() {
     // Listen for clicks and get mouse position
     c.addEventListener("click", function(evt) {
         var mousePos = getCursorCoords(c, evt);
         console.log(mousePos.x + ',' + mousePos.y)
+        checkClickArea(mousePos.x, mousePos.y);
     }, false);
 
     // Draw the first view
@@ -65,8 +69,20 @@ function addButton(str, x, y, w, h, bg) {
             clearInterval(tryUntilReady);
             drawImg(bg, x, y, w, h);
             writeText(str, x + 90, y + 90, "Arial", 60, "white");
+            buttonAreas.push([x, y, x + w, y + h]);
         }
     }, 1);
+}
+
+
+function checkClickArea(x, y) {
+    for (var i = 0; i < buttonAreas.length; i++) {
+        if (x > buttonAreas[i][0] && x < buttonAreas[i][2]) {
+            if (y > buttonAreas[i][1] && y < buttonAreas[i][3]) {
+                console.log("Clicked a button");
+            }
+        }
+    }
 }
 
 
