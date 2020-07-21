@@ -1,5 +1,6 @@
 <html>
     <head>
+        <meta charset="UTF-8">
         <title>
             Vantaankosken kalapuikkopeli
         </title>
@@ -7,36 +8,24 @@
             html, body {
                 margin: 0px;
                 padding: 0px;
-            }
-            .container {
-                width: 800px;
-                height: 600px;
-                margin: 20px auto;
-            }
-            #c {
-                display: block;
-                margin: 0px auto;
-                border: 1px #000 solid;
-            }
-            a, a:visited, a:hover {
-                text-align: center;
-                color: #000;
-                text-decoration: none;
+                font-family: 'Arial';
             }
             .lander {
                 width: 100%;
                 height: 100%;
                 background: #fff;
                 position: absolute;
+                text-align: center;
+                padding-top: 100px;
+            }
+            .btn {
+                font-size: 50px;
+                color: #fff;
             }
         </style>
         <body>
-            <div class="lander" onclick="init()">WIP: klikkaa ruutua aloittaaksesi</div>
-            <div class="container">
-                <canvas id="c" width=800 height=600></canvas>
-                <br>
-                <a href="https://github.com/sjaks/vantaankosken-kalapuikko-js">Löydät pelin Githubista.</a>
-            </div>
+            <div class="lander" onclick="init()">Klikkaa ruutua aloittaaksesi</div>
+            <div id="container"></div>
             <script src="js/main.js"></script>
         </body>
     </head>

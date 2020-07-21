@@ -1,29 +1,22 @@
-var c = document.getElementById("c");
-var ctx = c.getContext("2d");
-var ch = c.height;
-var cw = c.width;
-var waitForImage = 0;
-
-
-var buttonAreas = [];
+var canvas = document.getElementById("container");
+canvas.style.height = window.innerHeight;
+canvas.style.width = window.innerWidth;
+ch = canvas.style.height;
+cw = canvas.style.width;
 
 
 // Initialize the game
 function init() {
+    // Hide the lander screen
     document.getElementsByClassName("lander")[0].remove();
-    // Listen for clicks and get mouse position
-    c.addEventListener("click", function(evt) {
-        var mousePos = getCursorCoords(c, evt);
-        console.log(mousePos.x + ',' + mousePos.y)
-        checkClickArea(mousePos.x, mousePos.y);
-    }, false);
 
     // Draw the first view
-    drawImg("school.png", 0, 0, cw, ch);
-    writeText("Vantaankosken", 400, 70, "Arial", 50, "blue");
-    writeText("KALAPUIKKOPELI", 340, 170, "Arial", 50, "blue");
-    addButton("ALOITA", 300, 400, 400, 150, "fishfinger.png")
+    drawImg("school", 0, 0, cw, ch);
+    writeText("Vantaankosken", 500, 70, "Arial", 50, "blue");
+    writeText("KALAPUIKKOPELI", 420, 170, "Arial", 50, "blue");
+    addButton("ALOITA", 500, 400, 400, 150, "fishfinger", "choiceScreen()")
 
+    // Play the introduction sound
     var audio = new Audio('sounds/vantaankoskenkalapuikkopeli.opus');
     audio.play();
 }
@@ -31,79 +24,109 @@ function init() {
 
 // Ask the question
 function choiceScreen() {
-    ctx.clearRect(0, 0, c.width, c.height);
-
-    ctx.beginPath();
-    ctx.translate(c.width / 2, c.height / 2 + 100);
-    ctx.scale(4, 2);
-    ctx.arc(6, 1, 60, 0, 2 * Math.PI, false);
-    ctx.stroke();
-
-    addButton("Joo", 300, 400, 400, 150, "blue.png");
-    //addButton("Ei", 200, 100, 200, 100, "blue.png");
+    clearScreen();
+    drawImg("plate", 0, 0, cw, ch);
+    writeText("Ota neljäs kalapuikko", 100, 70, "Arial", 50, "black");
+    addButton("Joo", 50, 200, 160, 120, "blue", "checkChoice(true)")
+    addButton("Ei", 700, 200, 160, 120, "blue", "checkChoice(false)")
 
     var audio = new Audio('sounds/otaneljaskalapuikko.opus');
     audio.play();
 }
 
 
-// Returns cursor location as an object {x, y}
-function getCursorCoords(c, evt) {
-    var rect = c.getBoundingClientRect();
-    return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-    };
-}
+// Check for win
+function checkChoice(tookTheFourtOne) {
+    clearScreen();
+    var won;
 
+    if (tookTheFourtOne) {
+        drawImg("policecar", 0, 0, cw, ch);
+        writeText("PIIPAA-PIIPAA", 100, 70, "Arial", 70, "white");
 
-// Draws a PNG on the canvas in  the given location
-function drawImg(imgName, x, y, w, h) {
-    waitForImage++;
-    var img = new Image();
-    img.src = "images/png/" + imgName;
-    img.onload = () => {
-        ctx.drawImage(img, x, y, w, h);
-        waitForImage--;
-    };
-}
+        var audio = new Audio('sounds/piipaapiipaahavisitpelin.opus');
+        audio.play();
 
+        won = false;
+    } else {
+        drawImg("cookerlady", 0, 0, cw, ch);
 
-// Writes text on the canvas.
-// Waits until images have loaded to avoid overlap
-function writeText(str, x, y, font, size, color) {
-    var tryUntilReady = setInterval(function() {
-        if (waitForImage == 0) {
-            clearInterval(tryUntilReady);
-            ctx.fillStyle = color;
-            ctx.font = size + "px " + font;
-            ctx.fillText(str, x, y);
+        var audio = new Audio('sounds/hihhihhiivoititpelin.opus');
+        audio.play();
+
+        won = true;
+    }
+
+    setTimeout(function() {
+        // Change screen
+        clearScreen();
+
+        if (won) {
+            writeText("VOITIT", 100, 70, "Cooper Black", 80, "black");
+            writeText("PELIN", 100, 200, "Cooper Black", 80, "black");
+        } else {
+            writeText("HÄVISIT", 100, 70, "Cooper Black", 80, "black");
+            writeText("PELIN", 100, 200, "Cooper Black", 80, "black");
         }
-    }, 1);
+    }, 1850);
+
+}
+
+
+// Draws a PNG in the given location
+function drawImg(imgName, x, y, w, h) {
+    var newImg = document.createElement("img");
+    newImg.src = "images/png/" + imgName + ".png";
+    newImg.style.position = "absolute";
+    newImg.style.left = x;
+    newImg.style.top = y;
+    newImg.style.height = h;
+    newImg.style.width = w;
+    newImg.className = "img";
+    canvas.appendChild(newImg);
+}
+
+
+// Writes text on the page
+function writeText(str, x, y, font, size, color) {
+    var newTxt = document.createElement("span");
+    newTxt.style.position = "absolute";
+    newTxt.style.left = x;
+    newTxt.style.top = y;
+    newTxt.style.fontSize = size;
+    newTxt.style.color = color;
+    newTxt.style.fontFamily = font;
+    newTxt.innerHTML = str;
+    newTxt.className = "txt";
+    canvas.appendChild(newTxt);
 }
 
 
 // Creates a clickable button element
-// Waits until images have loaded to avoid overlap
-function addButton(str, x, y, w, h, bg) {
-    var tryUntilReady = setInterval(function() {
-        if (waitForImage == 0) {
-            clearInterval(tryUntilReady);
-            drawImg(bg, x, y, w, h);
-            writeText(str, x + 90, y + 90, "Arial", 60, "white");
-            buttonAreas.push([x, y, x + w, y + h, choiceScreen]);
-        }
-    }, 1);
+function addButton(str, x, y, w, h, bg, func) {
+    var newBtn = document.createElement("div");
+    newBtn.style.position = "absolute";
+    newBtn.style.left = x;
+    newBtn.style.top = y;
+    newBtn.style.height = h;
+    newBtn.style.width = w;
+    newBtn.style.background = "url(images/png/" + bg + ".png)";
+    newBtn.style.backgroundSize = "cover";
+    newBtn.className = "btn";
+    newBtn.setAttribute("onclick", func);
+
+    var newBtnTxt = document.createElement("div");
+    newBtnTxt.style.textAlign = "center";
+    newBtnTxt.style.paddingTop = 30;
+    newBtnTxt.innerHTML = str;
+    newBtnTxt.className = "btnTxt";
+
+    newBtn.appendChild(newBtnTxt);
+    canvas.appendChild(newBtn);
 }
 
 
-function checkClickArea(x, y) {
-    for (var i = 0; i < buttonAreas.length; i++) {
-        if (x > buttonAreas[i][0] && x < buttonAreas[i][2]) {
-            if (y > buttonAreas[i][1] && y < buttonAreas[i][3]) {
-                console.log("Clicked a button");
-                buttonAreas[i][4]();
-            }
-        }
-    }
+// Removes all elements from the canvas
+function clearScreen() {
+    canvas.innerHTML = "";
 }
