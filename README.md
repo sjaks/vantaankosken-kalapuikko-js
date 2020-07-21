@@ -11,10 +11,10 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 - [ ] Vector buttons
 
 ### Sound effects
-- [ ] Starting sound
-- [ ] Question sound
-- [ ] Victory sound
-- [ ] Defeat sound
+- [x] Starting sound
+- [x] Question sound
+- [x] Victory sound
+- [x] Defeat sound
 
 ### Code implementation
 - [x] Create skeleton files
@@ -36,3 +36,6 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 - images/svg/cookerlady.png
   - [Sami Jakonen](https://jaks.fi/)
   - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- sounds/
+  - [Petri Salminen](https://salminen.dev/)
+  - [CC BY 4.0](https://creativecommons.org/licenses/by/3.0/)
