@@ -4,6 +4,10 @@
             Vantaankosken kalapuikkopeli
         </title>
         <style>
+            html, body {
+                margin: 0px;
+                padding: 0px;
+            }
             .container {
                 width: 800px;
                 height: 600px;
@@ -19,8 +23,15 @@
                 color: #000;
                 text-decoration: none;
             }
+            .lander {
+                width: 100%;
+                height: 100%;
+                background: #fff;
+                position: absolute;
+            }
         </style>
         <body>
+            <div class="lander" onclick="init()">WIP: klikkaa ruutua aloittaaksesi</div>
             <div class="container">
                 <canvas id="c" width=800 height=600></canvas>
                 <br>

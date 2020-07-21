@@ -10,6 +10,7 @@ var buttonAreas = [];
 
 // Initialize the game
 function init() {
+    document.getElementsByClassName("lander")[0].remove();
     // Listen for clicks and get mouse position
     c.addEventListener("click", function(evt) {
         var mousePos = getCursorCoords(c, evt);
@@ -22,6 +23,27 @@ function init() {
     writeText("Vantaankosken", 400, 70, "Arial", 50, "blue");
     writeText("KALAPUIKKOPELI", 340, 170, "Arial", 50, "blue");
     addButton("ALOITA", 300, 400, 400, 150, "fishfinger.png")
+
+    var audio = new Audio('sounds/vantaankoskenkalapuikkopeli.opus');
+    audio.play();
+}
+
+
+// Ask the question
+function choiceScreen() {
+    ctx.clearRect(0, 0, c.width, c.height);
+
+    ctx.beginPath();
+    ctx.translate(c.width / 2, c.height / 2 + 100);
+    ctx.scale(4, 2);
+    ctx.arc(6, 1, 60, 0, 2 * Math.PI, false);
+    ctx.stroke();
+
+    addButton("Joo", 300, 400, 400, 150, "blue.png");
+    //addButton("Ei", 200, 100, 200, 100, "blue.png");
+
+    var audio = new Audio('sounds/otaneljaskalapuikko.opus');
+    audio.play();
 }
 
 
@@ -69,7 +91,7 @@ function addButton(str, x, y, w, h, bg) {
             clearInterval(tryUntilReady);
             drawImg(bg, x, y, w, h);
             writeText(str, x + 90, y + 90, "Arial", 60, "white");
-            buttonAreas.push([x, y, x + w, y + h]);
+            buttonAreas.push([x, y, x + w, y + h, choiceScreen]);
         }
     }, 1);
 }
@@ -80,10 +102,8 @@ function checkClickArea(x, y) {
         if (x > buttonAreas[i][0] && x < buttonAreas[i][2]) {
             if (y > buttonAreas[i][1] && y < buttonAreas[i][3]) {
                 console.log("Clicked a button");
+                buttonAreas[i][4]();
             }
         }
     }
 }
-
-
-init();
