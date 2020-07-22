@@ -7,8 +7,8 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 - [x] Police car picture
 - [x] Fish finger picture
 - [x] Cooker lady picture
-- [ ] Plate vector graphics
-- [ ] Vector buttons
+- [x] Plate vector graphics
+- [x] Vector buttons
 
 ### Sound effects
 - [x] Starting sound
@@ -18,7 +18,7 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 
 ### Code implementation
 - [x] Create skeleton files
-- [ ] Design game logic
+- [x] Design game logic
 - [ ] Create frontend
 - [ ] Test everything
 

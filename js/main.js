@@ -8,7 +8,8 @@ cw = canvas.style.width;
 // Initialize the game
 function init() {
     // Hide the lander screen
-    document.getElementsByClassName("lander")[0].remove();
+    if ( document.getElementsByClassName("lander").length > 0)
+        document.getElementsByClassName("lander")[0].remove();
 
     // Draw the first view
     drawImg("school", 0, 0, cw, ch);
@@ -17,7 +18,7 @@ function init() {
     addButton("ALOITA", 500, 400, 400, 150, "fishfinger", "choiceScreen()")
 
     // Play the introduction sound
-    var audio = new Audio('sounds/vantaankoskenkalapuikkopeli.opus');
+    var audio = new Audio('sounds/vantaankoskenkalapuikkopeli.mp3');
     audio.play();
 }
 
@@ -30,7 +31,11 @@ function choiceScreen() {
     addButton("Joo", 50, 200, 160, 120, "blue", "checkChoice(true)")
     addButton("Ei", 700, 200, 160, 120, "blue", "checkChoice(false)")
 
-    var audio = new Audio('sounds/otaneljaskalapuikko.opus');
+    drawImg("fishfinger", window.innerWidth / 2 + 200, window.innerHeight / 2 - 200, 400, 170);
+    drawImg("fishfinger", window.innerWidth / 2, window.innerHeight / 2, 400, 170);
+    drawImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 + 150, 400, 170);
+
+    var audio = new Audio('sounds/otaneljaskalapuikko.mp3');
     audio.play();
 }
 
@@ -44,14 +49,14 @@ function checkChoice(tookTheFourtOne) {
         drawImg("policecar", 0, 0, cw, ch);
         writeText("PIIPAA-PIIPAA", 100, 70, "Arial", 70, "white");
 
-        var audio = new Audio('sounds/piipaapiipaahavisitpelin.opus');
+        var audio = new Audio('sounds/piipaapiipaa.mp3');
         audio.play();
 
         won = false;
     } else {
         drawImg("cookerlady", 0, 0, cw, ch);
 
-        var audio = new Audio('sounds/hihhihhiivoititpelin.opus');
+        var audio = new Audio('sounds/hihhihhii.mp3');
         audio.play();
 
         won = true;
@@ -62,12 +67,20 @@ function checkChoice(tookTheFourtOne) {
         clearScreen();
 
         if (won) {
-            writeText("VOITIT", 100, 70, "Cooper Black", 80, "black");
-            writeText("PELIN", 100, 200, "Cooper Black", 80, "black");
+            writeText("VOITIT", 100, 70, "Sigmar One", 80, "black");
+            writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
+
+            var audio = new Audio('sounds/voititpelin.mp3');
+            audio.play();
         } else {
-            writeText("HÄVISIT", 100, 70, "Cooper Black", 80, "black");
-            writeText("PELIN", 100, 200, "Cooper Black", 80, "black");
+            writeText("HÄVISIT", 100, 70, "Sigmar One", 80, "black");
+            writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
+
+            var audio = new Audio('sounds/havisitpelin.mp3');
+            audio.play();
         }
+
+        addButton("UUDESTAAN", 500, 400, 400, 150, "fishfinger", "init()")
     }, 1850);
 
 }
