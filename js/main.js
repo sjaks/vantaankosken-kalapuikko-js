@@ -5,6 +5,29 @@ ch = canvas.style.height;
 cw = canvas.style.width;
 
 
+// Preload all assets
+var audio1 = new Audio('sounds/vantaankoskenkalapuikkopeli.mp3');
+var audio2 = new Audio('sounds/otaneljaskalapuikko.mp3');
+var audio3 = new Audio('sounds/piipaapiipaa.mp3');
+var audio4 = new Audio('sounds/hihhihhii.mp3');
+var audio5 = new Audio('sounds/voititpelin.mp3');
+var audio6 = new Audio('sounds/havisitpelin.mp3');
+
+var bgSize = calculateFullScreenImageSize();
+var images = {};
+
+preloadImg("school", 0, 0, bgSize.x, bgSize.y);
+preloadImg("plate", 0, 0, bgSize.x, bgSize.y);
+preloadImg("fishfinger", window.innerWidth / 2 + 200, window.innerHeight / 2 - 200, 250, 100);
+preloadImg("fishfinger", window.innerWidth / 2, window.innerHeight / 2, 250, 100);
+preloadImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 + 150, 250, 100);
+preloadImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 - 200, 250, 100);
+preloadImg("policecar", 0, 0, bgSize.x, bgSize.y);
+preloadImg("cookerlady", 0, 0, bgSize.x, bgSize.y);
+preloadImg("fishfinger", -100, 40, 400, 150);
+preloadImg("fishfinger", -100, 220, 400, 150);
+
+
 // Initialize the game
 function init() {
     // Hide the lander screen
@@ -12,17 +35,16 @@ function init() {
         document.getElementsByClassName("lander")[0].remove();
 
     clearScreen();
-    var bgSize = calculateFullScreenImageSize();
+    
 
     // Draw the first view
-    drawImg("school", 0, 0, bgSize.x, bgSize.y);
+    showImg("school");
     writeText("Vantaankosken", -100, 70, "Arial", 70, "blue");
     writeText("KALAPUIKKOPELI", -100, 170, "Arial", 70, "blue");
     addButton("ALOITA", -100, 400, 400, 150, "fishfinger", "choiceScreen()")
 
     // Play the introduction sound
-    var audio = new Audio('sounds/vantaankoskenkalapuikkopeli.mp3');
-    audio.play();
+    audio1.play();
 }
 
 
@@ -30,43 +52,38 @@ function init() {
 function choiceScreen() {
     clearScreen();
 
-    var bgSize = calculateFullScreenImageSize();
-    drawImg("plate", 0, 0, bgSize.x, bgSize.y);
+    preloadImg
+    showImg("plate");
 
     writeText("Ota neljäs kalapuikko", 100, 70, "Arial", 50, "black");
     addButton("Joo", 200, 200, 160, 120, "blue", "checkChoice(true)")
     addButton("Ei", -200, 200, 160, 120, "blue", "checkChoice(false)")
 
-    drawImg("fishfinger", window.innerWidth / 2 + 200, window.innerHeight / 2 - 200, 250, 100);
-    drawImg("fishfinger", window.innerWidth / 2, window.innerHeight / 2, 250, 100);
-    drawImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 + 150, 250, 100);
-    drawImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 - 200, 250, 100);
+    showImg("fishfinger");
+    showImg("fishfinger");
+    showImg("fishfinger");
+    showImg("fishfinger");
 
-    var audio = new Audio('sounds/otaneljaskalapuikko.mp3');
-    audio.play();
+    audio2.play();
 }
 
 
 // Check for win
 function checkChoice(tookTheFourtOne) {
     clearScreen();
-    var bgSize = calculateFullScreenImageSize();
+    
     var won;
 
     if (tookTheFourtOne) {
-        drawImg("policecar", 0, 0, bgSize.x, bgSize.y);
+        showImg("policecar");
         writeText("PIIPAA-PIIPAA", -200, 70, "Arial", 70, "white");
 
-        var audio = new Audio('sounds/piipaapiipaa.mp3');
-        audio.play();
-
+        audio3.play();
         won = false;
     } else {
-        drawImg("cookerlady", 0, 0, bgSize.x, bgSize.y);
+        showImg("cookerlady");
 
-        var audio = new Audio('sounds/hihhihhii.mp3');
-        audio.play();
-
+        audio4.play();
         won = true;
     }
 
@@ -77,27 +94,23 @@ function checkChoice(tookTheFourtOne) {
         if (won) {
             writeText("VOITIT", 100, 70, "Sigmar One", 80, "black");
             writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
-
-            var audio = new Audio('sounds/voititpelin.mp3');
-            audio.play();
+            audio5.play();
         } else {
             writeText("HÄVISIT", 100, 70, "Sigmar One", 80, "black");
             writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
-
-            var audio = new Audio('sounds/havisitpelin.mp3');
-            audio.play();
+            audio6.play();
         }
 
-        drawImg("fishfinger", -100, 40, 400, 150);
-        drawImg("fishfinger", -100, 220, 400, 150);
+        showImg("fishfinger");
+        showImg("fishfinger");
         addButton("UUDESTAAN", -100, 400, 400, 150, "fishfinger", "init()")
     }, 1850);
 
 }
 
 
-// Draws a PNG in the given location
-function drawImg(imgName, x, y, w, h) {
+// Creates an img element
+function preloadImg(imgName, x, y, w, h) {
     var newImg = document.createElement("img");
     newImg.src = "images/png/" + imgName + ".png";
     newImg.style.position = "absolute";
@@ -117,7 +130,14 @@ function drawImg(imgName, x, y, w, h) {
     newImg.style.height = h;
     newImg.style.width = w;
     newImg.className = "img";
-    canvas.appendChild(newImg);
+
+    images[imgName] = newImg;
+}
+
+
+// Prints an img element on the canvas
+function showImg(imgName) {
+    canvas.appendChild(images[imgName]);
 }
 
 
