@@ -38,4 +38,4 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
   - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
 - sounds/
   - [Petri Salminen](https://salminen.dev/)
-  - [CC BY 4.0](https://creativecommons.org/licenses/by/3.0/)
+  - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
