@@ -1,26 +1,5 @@
 # Vantaankosken Kalapuikkopeli JS port
-This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, which was originally made in Flash.
-
-## Roadmap
-### Assets
-- [x] School picture
-- [x] Police car picture
-- [x] Fish finger picture
-- [x] Cooker lady picture
-- [x] Plate vector graphics
-- [x] Vector buttons
-
-### Sound effects
-- [x] Starting sound
-- [x] Question sound
-- [x] Victory sound
-- [x] Defeat sound
-
-### Code implementation
-- [x] Create skeleton files
-- [x] Design game logic
-- [ ] Create frontend
-- [ ] Test everything
+This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, which was originally made in Flash. We do not aim to clone the original game but create a proper remake with enhancements to both the visual and logical elements.
 
 ## Licenses
 
@@ -39,3 +18,7 @@ This is modernized Javascript version of the game Vantaankosken Kalapuikkopeli, 
 - sounds/
   - [Petri Salminen](https://salminen.dev/)
   - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+  
+  ## TODO:
+ - [ ] align elements
+ - [ ] review code
