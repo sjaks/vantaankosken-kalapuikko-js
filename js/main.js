@@ -1,6 +1,11 @@
 var canvas = document.getElementById("container");
-canvas.style.height = window.innerHeight;
-canvas.style.width = window.innerWidth;
+canvas.style.height = 600;
+canvas.style.width = 800;
+canvas.style.border = "1px black solid";
+canvas.style.margin = "50px auto";
+canvas.style.position = "relative";
+canvas.style.overflow = "hidden";
+canvas.style.zIndex = -1;
 ch = canvas.style.height;
 cw = canvas.style.width;
 
@@ -18,14 +23,9 @@ var images = {};
 
 preloadImg("school", 0, 0, bgSize.x, bgSize.y);
 preloadImg("plate", 0, 0, bgSize.x, bgSize.y);
-preloadImg("fishfinger", window.innerWidth / 2 + 200, window.innerHeight / 2 - 200, 250, 100);
-preloadImg("fishfinger", window.innerWidth / 2, window.innerHeight / 2, 250, 100);
-preloadImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 + 150, 250, 100);
-preloadImg("fishfinger", window.innerWidth / 2 - 300, window.innerHeight / 2 - 200, 250, 100);
+preloadImg("fishfinger", 0, 0, 400, 150);
 preloadImg("policecar", 0, 0, bgSize.x, bgSize.y);
 preloadImg("cookerlady", 0, 0, bgSize.x, bgSize.y);
-preloadImg("fishfinger", -100, 40, 400, 150);
-preloadImg("fishfinger", -100, 220, 400, 150);
 
 
 // Initialize the game
@@ -35,13 +35,13 @@ function init() {
         document.getElementsByClassName("lander")[0].remove();
 
     clearScreen();
-    
 
     // Draw the first view
+    canvas.style.zIndex = 1; // Move the canvas to the top
     showImg("school");
-    writeText("Vantaankosken", -100, 70, "Arial", 70, "blue");
-    writeText("KALAPUIKKOPELI", -100, 170, "Arial", 70, "blue");
-    addButton("ALOITA", -100, 400, 400, 150, "fishfinger", "choiceScreen()")
+    writeText("Vantaankosken", 470, 20, "Arial", 40, "blue");
+    writeText("KALAPUIKKOPELI", 420, 85, "Arial", 40, "blue");
+    addButton("ALOITA", 380, 400, 400, 150, 50, "fishfinger", "choiceScreen()")
 
     // Play the introduction sound
     audio1.play();
@@ -52,17 +52,10 @@ function init() {
 function choiceScreen() {
     clearScreen();
 
-    preloadImg
     showImg("plate");
-
-    writeText("Ota neljäs kalapuikko", 100, 70, "Arial", 50, "black");
-    addButton("Joo", 200, 200, 160, 120, "blue", "checkChoice(true)")
-    addButton("Ei", -200, 200, 160, 120, "blue", "checkChoice(false)")
-
-    showImg("fishfinger");
-    showImg("fishfinger");
-    showImg("fishfinger");
-    showImg("fishfinger");
+    writeText("Ota neljäs kalapuikko", 70, 40, "Arial", 70, "black");
+    addButton("Joo", 40, 200, 106, 80, 30, "blue", "checkChoice(true)")
+    addButton("Ei", 650, 200, 106, 80, 30, "blue", "checkChoice(false)")
 
     audio2.play();
 }
@@ -76,7 +69,7 @@ function checkChoice(tookTheFourtOne) {
 
     if (tookTheFourtOne) {
         showImg("policecar");
-        writeText("PIIPAA-PIIPAA", -200, 70, "Arial", 70, "white");
+        writeText("PIIPAA-PIIPAA", 50, 70, "Arial", 70, "white");
 
         audio3.play();
         won = false;
@@ -92,18 +85,21 @@ function checkChoice(tookTheFourtOne) {
         clearScreen();
 
         if (won) {
-            writeText("VOITIT", 100, 70, "Sigmar One", 80, "black");
-            writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
+            writeText("VOITIT", 15, 100, "Sigmar One", 80, "black");
+            writeText("PELIN", 45, 250, "Sigmar One", 80, "black");
             audio5.play();
+            showImg("fishfinger", 390, 20);
+            showImg("fishfinger", 390, 210);
         } else {
-            writeText("HÄVISIT", 100, 70, "Sigmar One", 80, "black");
-            writeText("PELIN", 100, 200, "Sigmar One", 80, "black");
+            writeText("HÄVISIT", 15, 100, "Sigmar One", 80, "black");
+            writeText("PELIN", 65, 250, "Sigmar One", 80, "black");
             audio6.play();
+            showImg("fishfinger", 390, 0); // 4th fish finger if lost
+            showImg("fishfinger", 390, 132);
+            showImg("fishfinger", 390, 267);
         }
 
-        showImg("fishfinger");
-        showImg("fishfinger");
-        addButton("UUDESTAAN", -100, 400, 400, 150, "fishfinger", "init()")
+        addButton("UUDESTAAN", 390, 400, 400, 150, 50, "fishfinger", "init()")
     }, 1850);
 
 }
@@ -115,17 +111,8 @@ function preloadImg(imgName, x, y, w, h) {
     newImg.src = "images/png/" + imgName + ".png";
     newImg.style.position = "absolute";
 
-    if (x > 0) {
-        newImg.style.left = x;
-    } else {
-        newImg.style.right = -x;
-    }
-
-    if (y > 0) {
-        newImg.style.top = y;
-    } else {
-        newImg.style.bottom = -y;
-    }
+    newImg.style.left = x;
+    newImg.style.top = y;
     
     newImg.style.height = h;
     newImg.style.width = w;
@@ -136,8 +123,11 @@ function preloadImg(imgName, x, y, w, h) {
 
 
 // Prints an img element on the canvas
-function showImg(imgName) {
-    canvas.appendChild(images[imgName]);
+function showImg(imgName, x, y) {
+    var img = images[imgName].cloneNode(true);
+    if (x) img.style.left = x;
+    if (y) img.style.top = y;
+    canvas.appendChild(img);
 }
 
 
@@ -146,17 +136,8 @@ function writeText(str, x, y, font, size, color) {
     var newTxt = document.createElement("span");
     newTxt.style.position = "absolute";
 
-    if (x > 0) {
-        newTxt.style.left = x;
-    } else {
-        newTxt.style.right = -x;
-    }
-
-    if (y > 0) {
-        newTxt.style.top = y;
-    } else {
-        newTxt.style.bottom = -y;
-    }
+    newTxt.style.left = x;
+    newTxt.style.top = y;
 
     newTxt.style.fontSize = size;
     newTxt.style.color = color;
@@ -168,21 +149,12 @@ function writeText(str, x, y, font, size, color) {
 
 
 // Creates a clickable button element
-function addButton(str, x, y, w, h, bg, func) {
+function addButton(str, x, y, w, h, s, bg, func) {
     var newBtn = document.createElement("div");
     newBtn.style.position = "absolute";
 
-    if (x > 0) {
-        newBtn.style.left = x;
-    } else {
-        newBtn.style.right = -x;
-    }
-
-    if (y > 0) {
-        newBtn.style.top = y;
-    } else {
-        newBtn.style.bottom = -y;
-    }
+    newBtn.style.left = x;
+    newBtn.style.top = y;
 
     newBtn.style.height = h;
     newBtn.style.width = w;
@@ -194,6 +166,7 @@ function addButton(str, x, y, w, h, bg, func) {
     var newBtnTxt = document.createElement("div");
     newBtnTxt.style.textAlign = "center";
     newBtnTxt.style.paddingTop = 30;
+    newBtnTxt.style.fontSize = s;
     newBtnTxt.innerHTML = str;
     newBtnTxt.className = "btnTxt";
 
@@ -210,14 +183,12 @@ function clearScreen() {
 
 // Returns image size so it covers the whole window
 function calculateFullScreenImageSize() {
-    var x = window.innerWidth;
-    var y = window.innerHeight;
-
-    if (x > y) {
-        y = "auto";
+    if (cw > ch) {
+        ch = "100%";
+        cw = "auto";
     } else {
-        x = "auto";
+        cw = "100%";
+        ch = "auto";
     }
-
-    return {x: x, y: y};
+    return {x: cw, y: ch};
 }
