@@ -85,14 +85,14 @@ function checkChoice(tookTheFourtOne) {
         clearScreen();
 
         if (won) {
-            writeText("VOITIT", 15, 100, "Sigmar One", 80, "black");
-            writeText("PELIN", 45, 250, "Sigmar One", 80, "black");
+            writeText("VOITIT", 15, 120, "Sigmar One", 60, "black");
+            writeText("PELIN", 45, 280, "Sigmar One", 60, "black");
             audio5.play();
             showImg("fishfinger", 390, 20);
             showImg("fishfinger", 390, 210);
         } else {
-            writeText("HÄVISIT", 15, 100, "Sigmar One", 80, "black");
-            writeText("PELIN", 65, 250, "Sigmar One", 80, "black");
+            writeText("HÄVISIT", 15, 150, "Sigmar One", 60, "black");
+            writeText("PELIN", 65, 280, "Sigmar One", 60, "black");
             audio6.play();
             showImg("fishfinger", 390, 0); // 4th fish finger if lost
             showImg("fishfinger", 390, 132);
